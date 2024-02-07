@@ -1,5 +1,5 @@
 ### Build Stage
-FROM python:slim-buster AS build
+FROM python:slim-bookworm AS build
 
 ARG IPFSGO=v0.13.0
 ARG TARGETARCH
@@ -17,7 +17,7 @@ RUN apt-get update; \
     && rm -rf /var/lib/apt/lists/*
 
 ### Bundle Stage
-FROM python:slim-buster AS bundle
+FROM python:slim-bookworm AS bundle
 
 ENV IPFS_PATH=/ipfs-podcasting/ipfs
 ARG USERID=1000
