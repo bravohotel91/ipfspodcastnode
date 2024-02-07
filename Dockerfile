@@ -1,7 +1,7 @@
 ### Build Stage
 FROM python:slim-bookworm AS build
 
-ARG IPFSGO=v0.13.0
+ARG IPFSGO=v0.26.0
 ARG TARGETARCH
 
 WORKDIR /ipfs-podcasting
