@@ -1,4 +1,4 @@
-name: Deploy Docker
+name: Deploy Container
 
 # Run workflow on main branch
 on:
