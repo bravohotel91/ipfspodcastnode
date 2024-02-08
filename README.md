@@ -1,77 +1,34 @@
-# podcastnode
+# [bravohotel91/ipfspodcastnode](https://github.com/bravohotel91/ipfspodcastnode)
 
-An Umbrel Docker App that provides IPFS storage and hosting for IPFSPodcasting.net (Crowd/Self hosting of podcast episodes over IPFS).
-If you have an Umbrel device and would like to participate, you can use the Web GUI or CLI:
+[IPFS Podcasting Node](https://ipfspodcasting.net) is a node providing Decentralized Podcast Distribution over IPFS - Crowd hosting podcast episodes with storage & bandwidth provided by volunteer nodes.
 
-## Install via Umbrel Web GUI
+## Application Setup
 
-1. Login to Umbrel
+Access the webui at `http://<your-ip>:8675`.
 
-2. Click on App store Icon
+Go to IPFSPodcasting.net and create an account. 
 
-3. Click on IPFS Podcasting
+Then enter your IPFSPodcasting.net account email in the top left hand corner and update the node to register your node to your account.
 
-4. Click install
+## Usage
 
-## Install via Umbrel CLI
+To help you get started creating a container from this image you can either use docker-compose or the docker cli.
 
-1. SSH into your umbrel:
+### docker-compose (recommended, [click here for more info](https://github.com/bravohotel91/ipfspodcastnode/blob/main/docker-compose.yml))
 
-  ```bash
-  ssh umbrel@umbrel.local
-  ```
-
-2. Create app directories & download/install docker-compose.yml:
-
-  ```bash
-  cd ~/umbrel
-  mkdir -p apps/ipfs-podcasting/cfg
-  mkdir -p apps/ipfs-podcasting/ipfs
-  wget https://raw.githubusercontent.com/Cameron-IPFSPodcasting/podcastnode/main/docker-compose.yml -O apps/ipfs-podcasting/docker-compose.yml
-  ```
-
-3. Install IPFS Podcasting
-
-  ```bash
-  ./scripts/app install ipfs-podcasting
-  ```
-
-4. You can browse the Web UI at <http://umbrel.local:8675/> and configure your email address to manage the node at <https://ipfspodcasting.net/Manage> You can also view the communication log to view activity.
-
-![image](https://user-images.githubusercontent.com/103131615/181925105-82fafb97-ed07-4071-b709-e9aef6a05f60.png)
-
-## Uninstall via Umbrel CLI
-
-To uninstall the app (!!! This will delete your IPFS configuration and all the files in your IPFS repository !!!)...
-
-  ```bash
-  ./scripts/app uninstall ipfs-podcasting
-  ```
-
-## Other useful commands (from the "~/umbrel" directory)
-
-### Stop the app
-
-  ```bash
-  ./scripts/app stop ipfs-podcasting
-  ```
-
-### Download a new docker image
-
-  ```bash
-  docker pull ipfspodcasting/podcastnode:v0.6
-  ```
-
-### Start the app
-
-  ```bash
- ./scripts/app start ipfs-podcasting
-  ```
-
-### Launch a command shell to execute IPFS commands...
-
-  ```bash
-  docker exec -ti ipfs-podcasting_web_1 sh
-  ```
-
-*Note*: If your Umbrel is behind a firewall, you may need to adjust firewall rules and/or port-foward allow traffic to port 4001 (both tcp/upd source/destination ports from your Umbrel IP address).
+```yaml
+---
+services:
+  web:
+    image: ghcr.io/bravohotel91/ipfspodcastnode:latest
+    init: true
+    restart: on-failure
+    stop_grace_period: 1m
+    user: "1000:1000"
+    ports:
+      - 4001:4001  # IPFS
+      - 8675:8675  # Web UI
+    volumes:
+      - ${APP_DATA_DIR}/ipfs:/ipfs-podcasting/ipfs
+      - ${APP_DATA_DIR}/cfg:/ipfs-podcasting/cfg
+```
