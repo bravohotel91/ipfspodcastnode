@@ -29,4 +29,3 @@ jobs:
           push: true # Will only build if this is not here
           tags: | 
             ghcr.io/${{ github.repository }}:latest
-            91bravohotel/ipfspodcastnode:latest
