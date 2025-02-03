@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and Push Docker Image
-        uses: docker/build-push-action@v5.4.0
+        uses: docker/build-push-action@v6.13.0
         with:
           push: true # Will only build if this is not here
           tags: | 
